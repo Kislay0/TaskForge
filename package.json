@@ -1,0 +1,7 @@
+{
+  "name": "taskforge",
+  "private": true,
+  "engines": {
+    "node": ">=22 <23"
+  }
+}
