@@ -9,12 +9,17 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@types/node": "^25.0.9",
     "@typescript-eslint/eslint-plugin": "^8.53.1",
     "@typescript-eslint/parser": "^8.53.1",
     "eslint": "^9.39.2",
+    "prisma": "^7.2.0",
     "typescript": "^5.9.3"
   },
   "scripts": {
     "lint": "eslint . --ext .ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.2.0"
   }
 }

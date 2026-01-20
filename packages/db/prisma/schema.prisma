@@ -1,0 +1,39 @@
+generator client{
+    provider = "prisma-client-js"
+}
+
+datasource db{
+    provider = "postgresql"
+}
+
+enum JobStatus {
+  CREATED
+  QUEUED
+  PROCESSING
+  RETRY_SCHEDULED
+  SUCCESS
+  DEAD
+}
+
+model Job {
+    id                  String @id  @default(uuid())
+    type                String
+    payload             Json
+
+    status              JobStatus
+    statusUpdatedAt     DateTime
+
+    retryCount          Int         @default(0)
+    maxReties           Int
+    nextRetryAt         DateTime?
+
+    lastError           String?
+    lastErrorAt         DateTime?
+
+    createdAt           DateTime    @default(now())
+    updatedAt           DateTime    @updatedAt
+    completedAt         DateTime?
+
+    @@index([status])
+    @@index(nextRetryAt)
+}
