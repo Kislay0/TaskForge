@@ -24,7 +24,7 @@ model Job {
     statusUpdatedAt     DateTime
 
     retryCount          Int         @default(0)
-    maxReties           Int
+    maxRetries          Int
     nextRetryAt         DateTime?
 
     lastError           String?
