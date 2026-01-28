@@ -63,6 +63,48 @@ app.post("/jobs", async (req,res)=>{
     });
 });
 
+app.get("/jobs/:id", async (req, res) =>{
+    const { id } = req.params;
+    
+    const job = await prisma.job.findUnique({
+        where : { id },
+    });
+    
+    if (!job){
+        return res.status(404).json({
+            error: "Job not found",
+        });
+    }
+    
+    return res.status(200).json({
+        id: job.id,
+        type: job.type,
+        status: job.status,
+        statusUpdatedAt: job.statusUpdatedAt,
+        retryCount: job.retryCount,
+        maxRetries: job.maxRetries,
+        payload: job.payload,
+        createdAt: job.createdAt,
+        updatedAt: job.updatedAt,
+    });
+});
+
+app.get("/jobs", async (_req,res) =>{
+    const job = await prisma.job.findMany({
+        orderBy: { createdAt : "desc"},
+        select : {
+            id: true,
+            type: true,
+            status: true,
+            statusUpdatedAt: true,
+            retryCount: true,
+            maxRetries: true,
+            createdAt: true,
+        },
+    });
+    return res.status(200).json({ job });
+});
+
 app.listen(config.port, ()=>{
     console.log(`API server listening on port ${config.port}`);
 });
